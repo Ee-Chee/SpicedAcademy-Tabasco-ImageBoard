@@ -1,10 +1,63 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>LengStyleGram</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <h1>I like Leng's StyleGram</h1>
+    <h3>Latest Images</h3>
+    <div id="main">
+        <form>
+        	<input v-model = 'form.title' name = "title" type = "text" placeholder = "image title">
+            <!--v-model will collect the inputs  -->
+        	<input v-model = 'form.description' name = "description" type = "text" placeholder = "image description">
+            <input v-model = "form.username" name = "username" type = "text" placeholder = "image username">
+        	<input name = "file" type = "file" accept = "image/*" @change = 'handleFileChange'>
+            <button @click.stop.prevent = 'uploadFile'>upload</button>
+            <!-- .stop stop event's propagation
+            .prevent submit event will no longer reload the page -->
+        </form>
+        <div id="container1">
+            <div class="img" v-if="images.length" v-for="img in images" :key="img.id" @click="imgModal(img.id)">
+                <img :src="img.url">
+                {{img.title}}
+
+            </div>
+        </div>
+        <!--key gives every img an unique id. No repeated img seen while waiting new rendering img   -->
+        <image-modal @change="closeImg" v-if="popImg" :imageid="currID" :urlimgid="urlImgId" :hash="onHashNum"></image-modal>
+        <!-- variable inside image-modal is still directly accessible from parent Vue, no props required. -->
+        <!-- img in array loop is not accessible outisde of container class="img" -->
+        <!-- the name of the 'props' is sensitive. Dont use camel like imgID. Use kebab style with hyphens or all small letters -->
+        <button @click.stop.prevent='loadingMoreImg' v-if="notLastImg">more...</button>
+    </div>
+    <script type="text/x-template" id="template">
+        <!--type-text to make sure html doesnt ignore contents in the script tag here. x-template is simply a name for this file, couldbe /funky  -->
+     <div id="renderImgContainer" @click="click">
+         <!--template must be wrapped (one child only)!!!  -->
+         <!--use props to pass the arguements from parent to child(component) or child to parent(make parent listens) -->
+         <div id="renderImg" @click.stop>
+             <img id="image" :src="details.url" />
+             <p>
+                 {{details.username}} {{details.title}} {{details.description}} {{details.created_at}}
+             </p>
+             <div>
+                 Add a Comment!
+             </div>
+             <input v-model = 'input.comment' name = "comment" type = "text" placeholder = "Comment here...">
+         	 <input v-model = 'input.username' name = "username" type = "text" placeholder = "Your name">
+             <button @click.stop.prevent = 'submitComment'>Submit</button>
+             <div v-if="allcomments.length" v-for="comm in allcomments">
+                 {{comm.comment}} By
+                 {{comm.usern}}
+             </div>
+         </div>
+     </div>
+    </script>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/jsfile.js"></script>
 </body>
 </html>
