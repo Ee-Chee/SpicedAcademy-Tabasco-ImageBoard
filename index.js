@@ -46,7 +46,9 @@ app.get("/image/:id", (req, res) => {
             res.json(data);
         })
         .catch(err => {
-            console.log("Err caught: ", err);
+            // console.log("Getting image's error: ", err);
+            // res.redirect("/"); //It works but the url doesnt change to 8081/
+            res.json(undefined); //output undefined for component to catch error
         });
 });
 
@@ -95,6 +97,10 @@ app.post("/comment", (req, res) => {
         .catch(err => {
             console.log("Err caught: ", err);
         });
+});
+
+app.get("*", (req, res) => {
+    res.redirect("/");
 });
 
 app.listen(8081, () => console.log(`I'm listening`));

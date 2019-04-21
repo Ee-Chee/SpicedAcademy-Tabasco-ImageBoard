@@ -9,7 +9,8 @@
             popImg: false,
             currID: null,
             notLastImg: true,
-            urlImgId: location.hash.slice(1), //this line is needed to handle user copy-paste the #num url on the next blank page. Hashchange event isnt triggered
+            urlImgId: location.hash.slice(1),
+            //this line is needed to handle user copy-paste the #num url on the next blank page. Hashchange event isnt triggered. So a default value is given.
             onHashNum: null
         },
         mounted: function() {

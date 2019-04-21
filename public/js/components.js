@@ -6,7 +6,8 @@ Vue.component("image-modal", {
             details: {},
             input: { comment: "", username: "", id: null },
             allcomments: [],
-            open: false
+            open: false,
+            toggleImg: true
         };
     },
     watch: {
@@ -14,11 +15,20 @@ Vue.component("image-modal", {
         //mounted function is not triggered when user already on the image details page.
         urlimgid: function() {
             var temp = this;
-            axios.get("/image/" + this.urlimgid).then(function(resp) {
-                // console.log("hi :", resp.data);
-                temp.details = resp.data[0].rows[0]; //unwrapping :C
-                temp.allcomments = resp.data[1].rows;
-            });
+            axios
+                .get("/image/" + this.urlimgid)
+                .then(function(resp) {
+                    // console.log("hi :", resp.data);
+                    temp.toggleImg = true;
+                    temp.details = resp.data[0].rows[0]; //unwrapping :C
+                    temp.allcomments = resp.data[1].rows;
+                    if (temp.details === undefined) {
+                        return throwErr;
+                    }
+                })
+                .catch(function(err) {
+                    temp.toggleImg = false;
+                });
         }
     },
     mounted: function() {
@@ -26,16 +36,33 @@ Vue.component("image-modal", {
         // console.log(this.urlimgid);
         var temp = this;
         if (this.hash) {
-            axios.get("/image/" + this.urlimgid).then(function(resp) {
-                // console.log("hi :", resp.data);
-                temp.details = resp.data[0].rows[0]; //unwrapping :C
-                temp.allcomments = resp.data[1].rows;
-            });
+            axios
+                .get("/image/" + this.urlimgid)
+                .then(function(resp) {
+                    // console.log("hi :", resp.data);
+                    temp.details = resp.data[0].rows[0]; //unwrapping :C
+                    temp.allcomments = resp.data[1].rows;
+                    // console.log("details: ", temp.details);
+                    if (temp.details === undefined) {
+                        //undefined temp.details isnt an error for promise. So this is made to return an Error here
+                        return throwErr;
+                    }
+                })
+                .catch(function(err) {
+                    temp.toggleImg = false;
+                    // temp.click(); //close popImg
+                    // console.log("err: ", err);
+                });
         } else {
-            axios.get("/image/" + this.imageid).then(function(resp) {
-                temp.details = resp.data[0].rows[0]; //unwrapping :C
-                temp.allcomments = resp.data[1].rows;
-            });
+            axios
+                .get("/image/" + this.imageid)
+                .then(function(resp) {
+                    temp.details = resp.data[0].rows[0]; //unwrapping :C
+                    temp.allcomments = resp.data[1].rows;
+                })
+                .catch(err => {
+                    console.log("Getting image's error: ", err);
+                });
         }
     },
     //component mounted when template is triggered

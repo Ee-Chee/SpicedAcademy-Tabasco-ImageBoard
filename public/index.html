@@ -37,7 +37,7 @@
      <div id="renderImgContainer" @click="click">
          <!--template must be wrapped (one child only)!!!  -->
          <!--use props to pass the arguements from parent to child(component) or child to parent(make parent listens) -->
-         <div id="renderImg" @click.stop>
+         <div id="renderImg" v-if="toggleImg" @click.stop>
              <img id="image" :src="details.url" />
              <p>
                  {{details.username}} {{details.title}} {{details.description}} {{details.created_at}}
@@ -51,6 +51,11 @@
              <div v-if="allcomments.length" v-for="comm in allcomments">
                  {{comm.comment}} By
                  {{comm.usern}}
+             </div>
+         </div>
+         <div v-else>
+             <div id="renderImg">
+                 Invalid url, please insert again.
              </div>
          </div>
      </div>
