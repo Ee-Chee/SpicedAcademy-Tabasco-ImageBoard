@@ -6,6 +6,7 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
 const cf = require("./config.json");
+const moment = require("moment");
 
 app.use(express.static("./public"));
 
@@ -42,7 +43,11 @@ app.get("/image/:id", (req, res) => {
     // console.log(req.params.id);
     Promise.all([dB.getImage(req.params.id), dB.getComments(req.params.id)])
         .then(data => {
-            // console.log("I'm here 2: ", data[0].rows[0], data[1].rows);
+            // console.log(
+            //     "I'm here 2: ",
+            //     // data[0].rows[0],
+            // );
+
             res.json(data);
         })
         .catch(err => {
@@ -83,7 +88,8 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             res.json(data.rows);
         })
         .catch(err => {
-            console.log("Err caught: ", err);
+            // console.log("Err caughttt: ", err);
+            res.json(undefined);
         });
 });
 

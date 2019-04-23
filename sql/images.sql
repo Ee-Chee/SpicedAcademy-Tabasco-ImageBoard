@@ -2,10 +2,10 @@ DROP TABLE IF EXISTS images;
 
 CREATE TABLE images(
     id SERIAL PRIMARY KEY,
-    url VARCHAR(300) NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
+    url VARCHAR(300) NOT NULL CHECK (url!=''),
+    username VARCHAR(25) NOT NULL CHECK (username!=''),
+    title VARCHAR(50) NOT NULL CHECK (title!=''),
+    description TEXT NOT NULL CHECK (description!=''),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

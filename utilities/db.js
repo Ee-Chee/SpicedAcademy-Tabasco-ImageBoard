@@ -10,7 +10,7 @@ exports.addImage = function(url, userN, tit, des) {
 };
 
 exports.getImages = function() {
-    let q = `SELECT * FROM images ORDER BY id DESC LIMIT 10;`;
+    let q = `SELECT * FROM images ORDER BY id DESC LIMIT 6;`;
     return db.query(q);
 };
 
@@ -42,7 +42,7 @@ exports.getMoreImages = function(lastID) {
     ) AS lowest_id FROM images
     WHERE id < $1
     ORDER BY id DESC
-    LIMIT 5;`;
+    LIMIT 4;`;
     let params = [lastID];
     return db.query(q, params);
 };

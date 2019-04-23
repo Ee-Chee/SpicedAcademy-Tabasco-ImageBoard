@@ -11,7 +11,10 @@
             notLastImg: true,
             urlImgId: location.hash.slice(1),
             //this line is needed to handle user copy-paste the #num url on the next blank page. Hashchange event isnt triggered. So a default value is given.
-            onHashNum: null
+            onHashNum: null,
+            displayUpload: false,
+            readyUpload: false,
+            inputErrMsg: false
         },
         mounted: function() {
             var app = this;
@@ -38,10 +41,14 @@
         // }).bind(this);
 
         methods: {
+            clickFileInput: function() {
+                document.getElementById("fileUpload").click();
+            },
             handleFileChange: function(e) {
                 // this stores the file that was just selected in the "file" property of the data object
                 // console.log(e.target.files[0]);
                 this.form.file = e.target.files[0];
+                this.readyUpload = true;
             },
             uploadFile: function() {
                 // formData is used to send FILES to server!
@@ -53,17 +60,29 @@
                 // logging formData gives you an empty object
                 // that's ok! it's working!
                 var temp = this;
-                axios.post("/upload", formData).then(function(resp) {
-                    // console.log(resp.data);
-                    // console.log(temp.images);
-                    temp.images.unshift(resp.data[0]);
-                });
+                axios
+                    .post("/upload", formData)
+                    .then(function(resp) {
+                        if (resp.data[0] === undefined) {
+                            return throwErr;
+                        }
+                        // console.log(resp.data[0]);
+                        // console.log(temp.images);
+                        temp.images.unshift(resp.data[0]);
+                    })
+                    .catch(function(err) {
+                        temp.inputErrMsg = true;
+                    });
+
+                this.displayUpload = false;
+                this.readyUpload = false;
             },
             imgModal: function(e) {
                 // console.log("see passed id", e);
                 this.currID = e;
                 this.popImg = true;
                 this.onHashNum = false;
+                this.inputErrMsg = false;
             },
             closeImg: function(e) {
                 this.popImg = e;
@@ -71,6 +90,7 @@
             loadingMoreImg: function(e) {
                 // console.log(this.images);
                 // console.log(this.images[this.images.length - 1].id);
+                this.inputErrMsg = false;
                 var temp = this;
                 let last_id = this.images[this.images.length - 1].id; //last id of image of current page
                 axios.post("/moreimages", { last_id }).then(function(resp) {
