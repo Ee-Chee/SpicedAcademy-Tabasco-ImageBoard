@@ -1,7 +1,10 @@
 //create connection pooling, to handle sudden burst of traffic
 var spicedPg = require("spiced-pg");
 //postges:username:password@port/database
-var db = spicedPg("postgres:postgres:postgres@localhost:5432/lengstylegram");
+var db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/lengstylegram"
+);
 
 exports.addImage = function(url, userN, tit, des) {
     let q = `INSERT INTO images (url, username, title, description) VALUES ($1, $2, $3, $4) RETURNING *;`;

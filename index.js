@@ -109,4 +109,4 @@ app.get("*", (req, res) => {
     res.redirect("/");
 });
 
-app.listen(8081, () => console.log(`I'm listening`));
+app.listen(process.env.PORT || 8081, () => console.log(`I'm listening`));
