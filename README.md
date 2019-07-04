@@ -25,7 +25,7 @@ Image Board is an Instagram-like project that anybody could go and post an image
 * When users click on one of the images displayed as a card on the main page, a modal(comment-section window) is popped out, displaying the title of the image, the description of the image, and the name of the user who uploaded it. 
 * Besides that, it shows all of the comments that have been made about the image. There is also a form field which the user can enter his name and add a comment. When a user submits a comment, that comment appears in the list of comments without reloading the page.
 * The modal is implemented as a Vue component. When the modal component mounts, axios request is made to get any data for the image it does not already have as well as all of the comments for the image. To be able to get this data, the id of the clicked image is passed to the component as a prop.
-* To close the modal, user can click outside of it. 
+* To close the modal, user can click outside of it. The component won't be able to change the property of its parent that made it appear. It will have to emit an event that the Vue instance listens for so that it can know when to hide the modal.
 
 <img src="comments.png">
 
@@ -37,7 +37,7 @@ Image Board is an Instagram-like project that anybody could go and post an image
 7) Client-side routing
 * The basic idea is to have client-side Javascript reads and interprets the url of the page and alter the page in accordance with it. With this solution, it allows users to share links that go directly to a particular image to check out all the comments about the image.
 * It is convenient to use hashes (url fragments) for this. The hash is readable in the browser by means of the location.hash property and it is possible to know when the hash changes by listening for the hashchange event on the window object. Although hash changes do not cause requests to be made to the server, they do generate entries in the browser history, which means that the back button works with hashes. 
-* For example, click this link: https://lengstylegram.herokuapp.com/#8. 8 is the ID number of the image. Changing the ID number will navigate you to other images. The ID number of the particular image is shown beside the title of the image on its modal(comment-section window).
+* For example, click this link: https://lengstylegram.herokuapp.com/#8. 8 is the ID number of the image. Changing the ID number will navigate you to the other images. The ID number of the particular image is shown beside the title of the image on its modal(comment-section window).
 
 **_NOTES_**:
 * Coding technologies: HTML, CSS, Javascript, Vue.js, Axios, DOM, Node.js, Express, Multer middleware, Postgresql, csurf and JSON.
