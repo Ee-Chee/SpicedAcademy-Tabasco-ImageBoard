@@ -4,7 +4,7 @@ Image Board is an Instagram-like project that anybody could go and post an image
 <img src="Lengstylegram.png">
 
 ## Features
-1) Displaying photos
+1) Displaying images
 * A Vue instance is created and when it mounts, it makes an axios request to get the data for the images. As the data obtained, HTML template will loop through them and render each one.
 
 2) Animated upload-cloud
