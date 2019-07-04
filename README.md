@@ -8,7 +8,7 @@ Image Board is an Instagram-like project that anybody could go and post an image
 * A Vue instance is created and when it mounts, it makes an axios request to get the data for the images. As the data obtained, HTML template will loop through them and render each one.
 
 2) Animated upload-cloud
-* Upon clicking the blue cloud, the input fiels sliding in from the left and the upload-cloud button sliding in from right.
+* Upon clicking the blue cloud, the input fields sliding in from the left and the upload-cloud button sliding in from right.
 
 <img src="before-upload.png">
 
