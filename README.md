@@ -40,7 +40,7 @@ Image Board is an Instagram-like project that anybody could go and post an image
 * For example, click this link: https://lengstylegram.herokuapp.com/#8. 8 is the ID number of the image. Changing the ID number will navigate you to the other images. The ID number of the particular image is shown beside the title of the image on its modal(comment-section window).
 
 **_NOTES_**:
-* Coding technologies: HTML, CSS, Javascript, Vue.js, Axios, DOM, Node.js, Express, Multer middleware, Postgresql, csurf and JSON.
+* Coding technologies: HTML, CSS, Javascript, Vue.js, Axios, DOM, Node.js, Express, Multer middleware, Postgresql and JSON.
 * Third party tools: Amazon Web Services(S3 storage) and Fontawesome-Icons.
 
 Thank you for reading. 9 out of 10 likes to this project.
